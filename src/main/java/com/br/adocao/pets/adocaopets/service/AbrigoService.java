@@ -36,9 +36,9 @@ public class AbrigoService {
 
     public AbrigoResponse cadastraAbrigo(CadastrarAbrigoRequest dto) {
         var abrigo = Abrigo.builder()
-                .nome(dto.getNome())
-                .email(dto.getEmail())
-                .telefone(dto.getTelefone())
+                .nome(dto.nome())
+                .email(dto.email())
+                .telefone(dto.telefone())
                 .build();
 
         abrigo = repository.save(abrigo);

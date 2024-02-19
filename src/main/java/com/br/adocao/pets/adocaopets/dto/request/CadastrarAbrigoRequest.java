@@ -1,14 +1,5 @@
 package com.br.adocao.pets.adocaopets.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record CadastrarAbrigoRequest (String nome, String telefone, String email) {
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class CadastrarAbrigoRequest {
-    private String nome;
-    private String telefone;
-    private String email;
 }
