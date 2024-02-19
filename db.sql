@@ -2,5 +2,6 @@ CREATE TABLE abrigo(
     id INT AUTO_INCREMENT NOT NULL UNIQUE,
     nome VARCHAR(200) NOT NULL,
     telefone VARCHAR(15) NOT NULL,
-    email  VARCHAR(50) NOT NULL
+    email  VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
 );
