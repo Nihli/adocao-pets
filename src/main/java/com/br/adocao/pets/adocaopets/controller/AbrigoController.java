@@ -1,7 +1,6 @@
 package com.br.adocao.pets.adocaopets.controller;
 
 import com.br.adocao.pets.adocaopets.dto.request.CadastrarAbrigoRequest;
-import com.br.adocao.pets.adocaopets.dto.response.AbrigoResponse;
 import com.br.adocao.pets.adocaopets.service.AbrigoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +27,26 @@ public class AbrigoController {
 
     @PostMapping
     public ResponseEntity<?> CadastrarAbrigo(@RequestBody CadastrarAbrigoRequest dto) {
-        var abrigoCadastrado = abrigoService.cadastraAbrigo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(abrigoService.cadastraAbrigo(dto));
+    }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(abrigoCadastrado);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> BuscarAbrigo(@PathVariable Long id) {
+        var abrigo = abrigoService.buscaAbrigo(id);
+
+        if (abrigo == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Abrigo não encontrado");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(abrigo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> RemoverAbrigo(@PathVariable Long id) {
+        if (!abrigoService.removerAbrigo(id)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Abrigo não encontrado");
+        }
+
+        return ResponseEntity.ok("Recurso removido");
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AbrigoService {
@@ -44,5 +45,31 @@ public class AbrigoService {
 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(abrigo, AbrigoResponse.class);
+    }
+
+    public AbrigoResponse buscaAbrigo(Long id) {
+        var optAbrigo = buscaAbrigoPorId(id);
+
+        if (optAbrigo.isEmpty()) {
+            return null;
+        }
+
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(optAbrigo.get(), AbrigoResponse.class);
+    }
+
+    public boolean removerAbrigo(Long id) {
+        var optAbrigo = buscaAbrigoPorId(id);
+
+        if (optAbrigo.isEmpty()) {
+            return false;
+        }
+
+        repository.delete(optAbrigo.get());
+        return true;
+    }
+
+    private Optional<Abrigo> buscaAbrigoPorId(Long id) {
+        return repository.findById(id);
     }
 }
