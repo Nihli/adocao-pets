@@ -19,9 +19,6 @@ public class AbrigoController {
     public ResponseEntity<ListaAbrigoDto> ListarAbrigos() {
         var abrigos = abrigoService.ListaAbrigo();
 
-        if (abrigos == null) {
-            return ResponseEntity.ok(new ListaAbrigoDto());
-        }
         return ResponseEntity.ok(abrigoService.ListaAbrigo());
     }
 }
