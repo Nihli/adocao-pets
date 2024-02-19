@@ -15,6 +15,10 @@ public class AbrigoService {
     public ListaAbrigoDto ListaAbrigo() {
         var abrigos = repository.findAll();
 
+        if (abrigos.isEmpty()) {
+            return null;
+        }
+
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(abrigos, ListaAbrigoDto.class);
     }
