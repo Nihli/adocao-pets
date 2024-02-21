@@ -1,6 +1,7 @@
 package com.br.adocao.pets.adocaopets.controller;
 
 import com.br.adocao.pets.adocaopets.dto.request.CadastrarAbrigoRequest;
+import com.br.adocao.pets.adocaopets.exception.CustomValidationException;
 import com.br.adocao.pets.adocaopets.service.AbrigoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,12 @@ public class AbrigoController {
 
     @GetMapping
     public ResponseEntity<?> ListarAbrigos() {
-        var abrigos = abrigoService.ListaAbrigo();
+        try{
+            return ResponseEntity.ok(abrigoService.ListaAbrigo());
 
-        if (abrigos == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Nenhum abrigo cadastrado");
+        } catch (CustomValidationException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
         }
-
-        return ResponseEntity.ok(abrigoService.ListaAbrigo());
     }
 
     @PostMapping
@@ -33,21 +33,23 @@ public class AbrigoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> BuscarAbrigo(@PathVariable Long id) {
-        var abrigo = abrigoService.buscaAbrigo(id);
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(abrigoService.buscaAbrigo(id));
 
-        if (abrigo == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Abrigo não encontrado");
+        } catch (CustomValidationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(abrigo);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> RemoverAbrigo(@PathVariable Long id) {
-        if (!abrigoService.removerAbrigo(id)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Abrigo não encontrado");
-        }
+        try {
+            abrigoService.removerAbrigo(id);
 
-        return ResponseEntity.ok("Recurso removido");
+            return ResponseEntity.ok("Recurso removido");
+
+        } catch (CustomValidationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

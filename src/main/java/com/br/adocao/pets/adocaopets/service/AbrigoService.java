@@ -2,6 +2,7 @@ package com.br.adocao.pets.adocaopets.service;
 
 import com.br.adocao.pets.adocaopets.dto.request.CadastrarAbrigoRequest;
 import com.br.adocao.pets.adocaopets.dto.response.AbrigoResponse;
+import com.br.adocao.pets.adocaopets.exception.CustomValidationException;
 import com.br.adocao.pets.adocaopets.model.Abrigo;
 import com.br.adocao.pets.adocaopets.repository.AbrigoRepository;
 import org.modelmapper.ModelMapper;
@@ -22,7 +23,7 @@ public class AbrigoService {
         var abrigos = repository.findAll();
 
         if (abrigos.isEmpty()) {
-            return null;
+            throw new CustomValidationException("Abrigo não encontrado");
         }
 
         List<AbrigoResponse> response = new ArrayList<>();
@@ -51,22 +52,21 @@ public class AbrigoService {
         var optAbrigo = buscaAbrigoPorId(id);
 
         if (optAbrigo.isEmpty()) {
-            return null;
+            throw new CustomValidationException("Abrigo não encontrado");
         }
 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(optAbrigo.get(), AbrigoResponse.class);
     }
 
-    public boolean removerAbrigo(Long id) {
+    public void removerAbrigo(Long id) {
         var optAbrigo = buscaAbrigoPorId(id);
 
         if (optAbrigo.isEmpty()) {
-            return false;
+            throw new CustomValidationException("Abrigo não encontrado");
         }
 
         repository.delete(optAbrigo.get());
-        return true;
     }
 
     private Optional<Abrigo> buscaAbrigoPorId(Long id) {
