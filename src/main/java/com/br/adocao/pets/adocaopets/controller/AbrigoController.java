@@ -2,6 +2,7 @@ package com.br.adocao.pets.adocaopets.controller;
 
 import com.br.adocao.pets.adocaopets.dto.request.CadastrarAbrigoRequest;
 import com.br.adocao.pets.adocaopets.service.AbrigoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AbrigoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> CadastrarAbrigo(@RequestBody CadastrarAbrigoRequest dto) {
+    public ResponseEntity<?> CadastrarAbrigo(@RequestBody @Valid CadastrarAbrigoRequest dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(abrigoService.cadastraAbrigo(dto));
     }
 
