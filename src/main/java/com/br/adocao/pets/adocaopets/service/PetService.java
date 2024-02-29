@@ -15,14 +15,15 @@ public class PetService {
     private PetRepository petRepository;
 
     public PetResponse cadastraPet(CadastrarPetRequest dto){
-        var pet = Pet.builder()
-                .especie(dto.especie())
-                .raca(dto.raca())
-                .nome(dto.nome())
-                .personalidade(dto.personalidade())
-                .idade(dto.idade())
-                .peso(dto.peso())
-                .build();
+        var pet = new Pet(
+                null,
+                dto.especie(),
+                dto.raca(),
+                dto.nome(),
+                dto.personalidade(),
+                dto.idade(),
+                dto.peso()
+        );
 
         pet = petRepository.save(pet);
 
