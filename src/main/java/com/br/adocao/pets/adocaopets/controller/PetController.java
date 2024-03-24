@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/pet")
+@RequestMapping("/pets")
 public class PetController {
 
-    private PetService petService;
+    private final PetService petService;
 
     @PostMapping
     public ResponseEntity<PetResponse> cadastraPet (@RequestBody CadastrarPetRequest dto) {

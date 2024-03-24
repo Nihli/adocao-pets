@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PetService {
 
-    private PetRepository petRepository;
+    private final PetRepository petRepository;
 
     public PetResponse cadastraPet(CadastrarPetRequest dto){
         var pet = new Pet(

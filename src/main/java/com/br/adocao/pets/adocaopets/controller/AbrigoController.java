@@ -14,10 +14,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/abrigo")
+@RequestMapping("/abrigos")
 public class AbrigoController {
 
-    private AbrigoService abrigoService;
+    private final AbrigoService abrigoService;
 
     @GetMapping
     public ResponseEntity<List<AbrigoResponse>> ListarAbrigos() {

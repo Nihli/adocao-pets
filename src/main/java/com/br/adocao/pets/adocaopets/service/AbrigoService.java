@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class AbrigoService {
 
-    private AbrigoRepository repository;
+    private final AbrigoRepository repository;
 
     public List<AbrigoResponse> ListaAbrigo() {
         var abrigos = repository.findAll();
