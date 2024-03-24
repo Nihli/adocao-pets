@@ -36,10 +36,10 @@ public class AbrigoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> RemoverAbrigo(@PathVariable Long id) {
+    public ResponseEntity<Void> RemoverAbrigo(@PathVariable Long id) {
         abrigoService.removerAbrigo(id);
 
-        return ResponseEntity.ok("Recurso removido");
+        return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
