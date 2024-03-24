@@ -5,18 +5,18 @@ import com.br.adocao.pets.adocaopets.dto.response.AbrigoResponse;
 import com.br.adocao.pets.adocaopets.exception.ResourceNotFoundException;
 import com.br.adocao.pets.adocaopets.model.Abrigo;
 import com.br.adocao.pets.adocaopets.repository.AbrigoRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class AbrigoService {
 
-    @Autowired
     private AbrigoRepository repository;
 
     public List<AbrigoResponse> ListaAbrigo() {

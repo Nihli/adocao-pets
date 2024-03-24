@@ -5,18 +5,18 @@ import com.br.adocao.pets.adocaopets.dto.response.AbrigoResponse;
 import com.br.adocao.pets.adocaopets.exception.ResourceNotFoundException;
 import com.br.adocao.pets.adocaopets.service.AbrigoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/abrigo")
 public class AbrigoController {
 
-    @Autowired
     private AbrigoService abrigoService;
 
     @GetMapping

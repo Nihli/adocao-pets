@@ -4,14 +4,14 @@ import com.br.adocao.pets.adocaopets.dto.request.CadastrarPetRequest;
 import com.br.adocao.pets.adocaopets.dto.response.PetResponse;
 import com.br.adocao.pets.adocaopets.model.Pet;
 import com.br.adocao.pets.adocaopets.repository.PetRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class PetService {
 
-    @Autowired
     private PetRepository petRepository;
 
     public PetResponse cadastraPet(CadastrarPetRequest dto){
