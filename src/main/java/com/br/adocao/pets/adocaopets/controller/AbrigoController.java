@@ -1,13 +1,16 @@
 package com.br.adocao.pets.adocaopets.controller;
 
 import com.br.adocao.pets.adocaopets.dto.request.CadastrarAbrigoRequest;
-import com.br.adocao.pets.adocaopets.exception.CustomValidationException;
+import com.br.adocao.pets.adocaopets.dto.response.AbrigoResponse;
+import com.br.adocao.pets.adocaopets.exception.ResourceNotFoundException;
 import com.br.adocao.pets.adocaopets.service.AbrigoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/abrigo")
@@ -17,13 +20,8 @@ public class AbrigoController {
     private AbrigoService abrigoService;
 
     @GetMapping
-    public ResponseEntity<?> ListarAbrigos() {
-        try{
-            return ResponseEntity.ok(abrigoService.ListaAbrigo());
-
-        } catch (CustomValidationException e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
-        }
+    public ResponseEntity<List<AbrigoResponse>> ListarAbrigos() {
+        return ResponseEntity.ok(abrigoService.ListaAbrigo());
     }
 
     @PostMapping
@@ -32,24 +30,20 @@ public class AbrigoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> BuscarAbrigo(@PathVariable Long id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(abrigoService.buscaAbrigo(id));
+    public ResponseEntity<AbrigoResponse> BuscarAbrigo(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(abrigoService.buscaAbrigo(id));
 
-        } catch (CustomValidationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> RemoverAbrigo(@PathVariable Long id) {
-        try {
-            abrigoService.removerAbrigo(id);
+    public ResponseEntity<String> RemoverAbrigo(@PathVariable Long id) {
+        abrigoService.removerAbrigo(id);
 
-            return ResponseEntity.ok("Recurso removido");
+        return ResponseEntity.ok("Recurso removido");
+    }
 
-        } catch (CustomValidationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    private ResponseEntity<String> captureException() {
+        return ResponseEntity.notFound().build();
     }
 }
